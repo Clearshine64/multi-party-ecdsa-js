@@ -26,7 +26,7 @@ const room_id = 1;
 let url = "/rooms/" + room_id + "/subscribe";
 router.get(url, function (req, res) {
     const res = JSON.parse(await bindings.p2_ecdsa_sign(
-        this.party1Endpoint,
+        this.partyEndpoint,
         JSON.stringify(msgHash.toString('hex')),
         JSON.stringify(childPartyTwoShare),
         stringifyHex(xPos),
@@ -43,12 +43,12 @@ router.get(url, function (req, res) {
         JSON.stringify(p2MasterKeyShare),
         stringifyHex(xPos),
         stringifyHex(yPos)));
-    return EcdsaParty2Share.fromPlain(res);
+    return EcdsaPartyShare.fromPlain(res);
 });
 
 url = "/rooms/" + room_id + "/broadcast";
 
 router.get(url, function (req, res) {
-    const res = JSON.parse(await bindings.p2_ecdsa_generate_master_key(this.party1Endpoint));
-    return EcdsaParty2Share.fromPlain(res);
+    const res = JSON.parse(await bindings.p2_ecdsa_generate_master_key(this.partyEndpoint));
+    return EcdsaPartyShare.fromPlain(res);
 });
