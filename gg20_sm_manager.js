@@ -5,6 +5,7 @@ const bindings  = require(path.join(__dirname, './native'));
 const {BigInt, EncryptionKey, FE, FE_BYTES_SIZE, GE, stringifyHex} = require('../common');
 const util = require('util');
 
+
 bindings.p2_ecdsa_generate_master_key = util.promisify(bindings.p2_ecdsa_generate_master_key);
 bindings.p2_ecdsa_sign = util.promisify(bindings.p2_ecdsa_sign);
 
