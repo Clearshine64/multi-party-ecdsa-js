@@ -1,0 +1,23 @@
+[package]
+name = "mpc-bindings"
+version = "0.1.0"
+authors = ["oded@kzencorp.com <oded@kzencorp.com>"]
+license = "MIT"
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "mpc_bindings"
+crate-type = ["staticlib", "dylib"]
+
+[build-dependencies]
+neon-build = "0.2.0"
+
+[dependencies]
+neon = "0.2.0"
+serde = "1.0.75"
+serde_json = "1.0.26"
+serde_derive = "1.0.75"
+kms = { git = "https://github.com/KZen-networks/kms-secp256k1.git", tag = "v0.2.1" }
+gotham-client = { git = "https://github.com/KZen-networks/gotham-city", tag = "v0.1.0" }
+gotham-server = { git = "https://github.com/KZen-networks/gotham-city", tag = "v0.1.0" }

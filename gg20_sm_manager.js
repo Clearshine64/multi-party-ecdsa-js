@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require('path');
-const bindings  = require(path.join(__dirname, '../../../native'));
+const bindings  = require(path.join(__dirname, './native'));
 const {BigInt, EncryptionKey, FE, FE_BYTES_SIZE, GE, stringifyHex} = require('../common');
 const util = require('util');
 
@@ -24,31 +24,31 @@ router.get("/", function (req, res) {
 const room_id = 1;
 
 let url = "/rooms/" + room_id + "/subscribe";
-router.get(url, function (req, res) {
-    const res = JSON.parse(await bindings.p2_ecdsa_sign(
+router.get(url, async function (req, res) {
+    const result = JSON.parse(await bindings.p2_ecdsa_sign(
         this.partyEndpoint,
         JSON.stringify(msgHash.toString('hex')),
         JSON.stringify(childPartyTwoShare),
         stringifyHex(xPos),
         stringifyHex(yPos)));
 
-    return EcdsaSignature.fromPlain(res);
+    return EcdsaSignature.fromPlain(result);
 
 });
 
 url = "/rooms/" + room_id + "/issue_unique_idx";
 
 router.get(url, function (req, res) {
-    const res = JSON.parse(bindings.p2_ecdsa_get_child_share(
+    const result = JSON.parse(bindings.p2_ecdsa_get_child_share(
         JSON.stringify(p2MasterKeyShare),
         stringifyHex(xPos),
         stringifyHex(yPos)));
-    return EcdsaPartyShare.fromPlain(res);
+    return EcdsaPartyShare.fromPlain(result);
 });
 
 url = "/rooms/" + room_id + "/broadcast";
 
-router.get(url, function (req, res) {
-    const res = JSON.parse(await bindings.p2_ecdsa_generate_master_key(this.partyEndpoint));
-    return EcdsaPartyShare.fromPlain(res);
+router.get(url, async function (req, res) {
+    const result = JSON.parse(await bindings.p2_ecdsa_generate_master_key(this.partyEndpoint));
+    return EcdsaPartyShare.fromPlain(result);
 });
