@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require('path');
-const bindings  = require(path.join(__dirname, './native'));
+const bindings  = require(path.join(__dirname, './native/'));
 const {BigInt, EncryptionKey, FE, FE_BYTES_SIZE, GE, stringifyHex} = require('../common');
 const util = require('util');
 
